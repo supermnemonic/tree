@@ -87,18 +87,17 @@ char *strconcat(char *s1, char *s2) {
     return t;
 }
 
-void printTree(TreeNodeType treenode, char *prefix) {
+void printTree(TreeNodeType treenode) {
     if (treenode == NULL) {
-        cout << prefix << "+- <null>\n";
+        cout << "+- <null>\n";
         return;
     }
 
-    cout << prefix << "+- " << treenode->info << "\n";
+    cout << "+- " << treenode->info << "\n";
 
     TreeNode *child;
-    char *s = strconcat(prefix, "|  ");
     for (child = treenode->firstChild; child != NULL; child = child->nextBrother) {
-        printTree(child, s);
+        printTree(child, "|  ");
     }
     //printTree(child, s);
 }

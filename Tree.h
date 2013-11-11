@@ -46,7 +46,7 @@ void inOrder(TreeNodeType treenode, InfoType datatosearch);
 void postOrder(TreeNodeType treenode, InfoType datatosearch);
 
 char *strconcat(char *s1, char *s2);
-void printTree(TreeNodeType treenode, char *prefix);
+void printTree(TreeNodeType treenode);
 void printNodePath(TreeNode *node);
 
 #endif	/* TREE_H */

@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Tree-Seaching
+PROJECTNAME=Tree-Searching
 
 # Active Configuration
 DEFAULTCONF=Debug

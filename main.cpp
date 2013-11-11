@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
     
     initTree(&tree, level, numofchilds);
     generateBalanceTree(&tree, NULL, 1);
-        
+    
     //cout<<"Tree size = "<<sizeOfTree(level, numofchilds)<<"\n\n";
     
     cout<<"Print Tree\n";
