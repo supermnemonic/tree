@@ -17,6 +17,13 @@ using namespace std;
  * 
  */
 int main(int argc, char* argv[]) {
+    
+    if (argc < 9){
+        cout<<"Specify the options!\n";
+        cout<<argv[0]<<" -d val -b val -r val -s val \n";
+        return 1;
+    }
+    
     // seed random number generator.
     srand(time(NULL));
 
@@ -26,6 +33,7 @@ int main(int argc, char* argv[]) {
     int datatosearch;
     
     int c;
+    
     while ((c = getopt(argc, (char **) argv, "d:b:r:s:?")) != -1) {
 //        cout << "Option: " << (char) c;
 //        if (optarg)
