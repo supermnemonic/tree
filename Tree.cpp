@@ -93,10 +93,10 @@ void printTree(TreeNodeType treenode, char *prefix) {
         return;
     }
 
-    cout << prefix << "+- " << treenode->info << "\n";
+    cout << prefix <<"["<<treenode->id<< "]--" << treenode->info << "\n";
 
     TreeNode *child;
-    char *s = strconcat(prefix, "|  ");
+    char *s = strconcat(prefix, "     ");
     for (child = treenode->firstChild; child != NULL; child = child->nextBrother) {
         printTree(child, s);
     }
