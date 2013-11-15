@@ -1,2 +1,5 @@
 /dist/Debug/
 /build/Debug/
+/nbproject/private/
+/build/Release/
+/dist/Release/

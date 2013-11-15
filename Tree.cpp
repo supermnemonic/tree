@@ -8,6 +8,9 @@
 
 using namespace std;
 
+int MINRANDOM = 0;
+int MAXRANDOM = 0;
+
 TreeNodeType makeNode(IdType id) {
     TreeNode *treenode;
     treenode = (TreeNodeType) malloc(sizeof (TreeNode_tag));
@@ -39,15 +42,20 @@ int sizeOfTree(int level, int numchild) {
     return size;
 }
 
-int randomNumber(int start, int end) {
-    return rand() % end + start;
+void setRangeRandom(int min, int max) {
+    MINRANDOM = min;
+    MAXRANDOM = max;
+}
+
+int randomNumber() {
+    return rand() % MAXRANDOM + MINRANDOM;
 }
 
 void generateBalanceTree(Tree *T, TreeNode *parent, int curlevel) {
     if ((*T).root == NULL) {
         TreeNode *newroot;
         newroot = makeNode(1);
-        newroot->info = randomNumber(1, 100);
+        newroot->info = randomNumber();
         (*T).root = newroot;
 
         parent = (*T).root;
@@ -58,7 +66,7 @@ void generateBalanceTree(Tree *T, TreeNode *parent, int curlevel) {
         TreeNode *prechild = NULL;
         for (int i = 1; i <= (*T).numOfChilds; i++) {
             TreeNode *newchild = makeNode(i);
-            newchild->info = randomNumber(1, 100);
+            newchild->info = randomNumber();
             newchild->parent = parent;
 
             if (parent->firstChild == NULL)
@@ -87,19 +95,37 @@ char *strconcat(char *s1, char *s2) {
     return t;
 }
 
-void printTree(TreeNodeType treenode, char *prefix) {
+bool isRoot(TreeNode *treenode) {
+    return treenode->parent == NULL;
+}
+
+void printTree(Tree tree, TreeNodeType treenode, char *prefix) {
     if (treenode == NULL) {
         cout << prefix << "+- <null>\n";
         return;
     }
 
-    cout << prefix <<"["<<treenode->id<< "]--" << treenode->info << "\n";
+    if (isRoot(treenode))
+        cout << prefix << "[" << treenode->id << "]-" << treenode->info << "\n";
+    else if (treenode->id == tree.numOfChilds) {
+        cout << prefix << "\b|__[" << treenode->id << "]-" << treenode->info << "\n";
+        if (treenode->firstChild == NULL)
+            cout << prefix << "\n";
+    } else
+        cout << prefix << "__[" << treenode->id << "]-" << treenode->info << "\n";
 
     TreeNode *child;
-    char *s = strconcat(prefix, "     ");
+    char *s;
+
     for (child = treenode->firstChild; child != NULL; child = child->nextBrother) {
-        printTree(child, s);
+        if (child->nextBrother != NULL) {
+            s = strconcat(prefix, "   |");
+        } else
+            s = strconcat(prefix, "    ");
+
+        printTree(tree, child, s);
     }
+
     //printTree(child, s);
 }
 
@@ -116,8 +142,8 @@ void printNodePath(TreeNode *node) {
     for (int i = length - 1; i >= 0; i--) {
         cout << paths[i] << " ";
     }
-    
-    cout<<"\n";
+
+    cout << "\n";
 }
 
 void printLevelN(TreeNodeType treenode, int level, InfoType datatosearch) {
@@ -126,7 +152,7 @@ void printLevelN(TreeNodeType treenode, int level, InfoType datatosearch) {
     if (level == 0) {
         //cout << "[" << treenode->id << "] " << treenode->info << "\n";
         if (treenode->info == datatosearch) {
-            cout << "Jalur menuju data " << treenode->info << " dari ROOT adalah : ";
+            //cout << "Jalur menuju data " << treenode->info << " dari ROOT adalah : ";
             printNodePath(treenode);
         } else {
             //cout << treenode->id << "  ";
@@ -147,7 +173,7 @@ void levelOrder(Tree t, TreeNodeType treenode, InfoType datatosearch) {
 void preOrder(TreeNodeType treenode, InfoType datatosearch) {
     //cout << "[" << treenode->id << "] " << treenode->info << "\n";
     if (treenode->info == datatosearch) {
-        cout << "Jalur menuju data " << treenode->info << " dari ROOT adalah : ";
+        //cout << "Jalur menuju data " << treenode->info << " dari ROOT adalah : ";
         printNodePath(treenode);
     } else {
         //cout << treenode->id << "  ";
@@ -167,7 +193,7 @@ void inOrder(TreeNodeType treenode, InfoType datatosearch) {
 
     //cout << "[" << treenode->id << "] " << treenode->info << "\n";
     if (treenode->info == datatosearch) {
-        cout << "Jalur menuju data " << treenode->info << " dari ROOT adalah : ";
+        //        cout << "Jalur menuju data " << treenode->info << " dari ROOT adalah : ";
         printNodePath(treenode);
     } else {
         //cout << treenode->id << "  ";
@@ -187,7 +213,7 @@ void postOrder(TreeNodeType treenode, InfoType datatosearch) {
 
     //cout << "["<<treenode->id<<"] "<<treenode->info << "\n";
     if (treenode->info == datatosearch) {
-        cout << "Jalur menuju data " << treenode->info << " dari ROOT adalah : ";
+        //        cout << "Jalur menuju data " << treenode->info << " dari ROOT adalah : ";
         printNodePath(treenode);
     } else {
         //cout << treenode->id << "  ";

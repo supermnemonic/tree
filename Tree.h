@@ -45,8 +45,11 @@ void preOrder(TreeNodeType treenode, InfoType datatosearch);
 void inOrder(TreeNodeType treenode, InfoType datatosearch);
 void postOrder(TreeNodeType treenode, InfoType datatosearch);
 
+void setRangeRandom(int min, int max);
+int randomNumber();
+
 char *strconcat(char *s1, char *s2);
-void printTree(TreeNodeType treenode, char* prefix);
+void printTree(Tree tree, TreeNodeType treenode, char* prefix);
 void printNodePath(TreeNode *node);
 
 #endif	/* TREE_H */

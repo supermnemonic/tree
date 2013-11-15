@@ -7,63 +7,107 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <stdio.h>
+#include <unistd.h>
 #include "Tree.h"
 
 using namespace std;
 
-/* project tentang traversing tree dengan postorder, inorder, postorder.
+/* project tentang traversing tree dengan preorder, inorder, postorder.
  * 
  */
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
     // seed random number generator.
     srand(time(NULL));
+
+    int level = 0;
+    int numofchilds = 0;
+    int maxrandom = 1;
+    int datatosearch;
+    
+    int c;
+    while ((c = getopt(argc, (char **) argv, "d:b:r:s:?")) != -1) {
+//        cout << "Option: " << (char) c;
+//        if (optarg)
+//            cout << ", argument: " << optarg;
+//        cout << '\n';
+        switch (c) {
+            case 'd':
+                level = atoi(optarg);
+                break;
+            case 'b':
+                numofchilds = atoi(optarg);
+                break;
+            case 'r':
+                maxrandom = atoi(optarg);
+                break;
+            case 's':
+                datatosearch = atoi(optarg);
+                break;
+            case '?':
+                if (optopt == 'c')
+                    printf("Option -%c requires an argument.\n", optopt);
+                else if (isprint(optopt))
+                    printf("Unknown option `-%c'.\n", optopt);
+                else
+                    printf("Unknown option character `\\x%x'.\n", optopt);
+                return 1;
+            default:
+                cout<<"Invalid option. \n";
+                abort();
+        }
+    }
     
     Tree tree;
-    int level = 3;
-    int numofchilds = 3;
-    
-    cout<<"Tree Depth / Level = ";
-    cin>>level;
-    
-    cout<<"Number Of Childs = ";
-    cin>>numofchilds;
-    
+
+//        cout << "Tree Depth / Level = ";
+//        cin >> level;
+//        cout << "Number Of Childs = ";
+//        cin >> numofchilds;
+
+    // set range for random number generator.
+    setRangeRandom(1, maxrandom);
+
+    // make empty tree, root=NULL
     initTree(&tree, level, numofchilds);
+
+    // generate balance tree, root is not NULL; d level, b branch, random number each node.
     generateBalanceTree(&tree, NULL, 1);
-    
+
     //cout<<"Tree size = "<<sizeOfTree(level, numofchilds)<<"\n\n";
-    
-    cout<<"Print Tree\n";
-    printTree(tree.root, "");
-    cout<<"\n\n";
-    
+
+    cout << "Print Tree\n";
+    printTree(tree, tree.root, "");
+    cout << "\n";
+
     // searching data XX
-    int datatosearch;
-    cout<<"Search data (1-100) = ";
-    cin>>datatosearch;
-    cout<<"\n";
+//    cout << "Search data (1-100) = ";
+//    cin >> datatosearch;
+//    cout << "\n";
+
+    cout<<"Search = "<<datatosearch<<"\n\n";
     
     // searching data using BFS
-    cout<<"BFS\n";
-    cout<<"Level-Order\n";
+    cout << "BFS :\n";
+    cout << "Level-Order\n";
     levelOrder(tree, tree.root, datatosearch);
-    cout<<"\n\n";
-    
+    cout << "\n\n";
+
     // searching data using DFS
-    cout<<"DFS\n";
-    cout<<"Pre-Order\n";
+    cout << "DFS :\n";
+    cout << "Pre-Order\n";
     preOrder(tree.root, datatosearch);
-    cout<<"\n";
-    
-    cout<<"In-Order\n";
+    cout << "\n";
+
+    cout << "In-Order\n";
     inOrder(tree.root, datatosearch);
-    cout<<"\n";
-    
-    cout<<"Post-Order\n";
+    cout << "\n";
+
+    cout << "Post-Order\n";
     postOrder(tree.root, datatosearch);
-    cout<<"\n";    
-    
-    cout<<"\n";
+    cout << "\n";
+
+    cout << "\n";
     return 0;
 }
 
